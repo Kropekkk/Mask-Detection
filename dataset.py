@@ -24,7 +24,6 @@ def generate_target(image_id, file):
         data = f.read()
         soup = BeautifulSoup(data, 'xml')
         objects = soup.find_all('object')
-        num_objs = len(objects)
 
         boxes = []
         labels = []
