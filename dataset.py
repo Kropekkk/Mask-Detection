@@ -43,16 +43,17 @@ def generate_target(image_id, file):
         return target
 
 class CustomDataset(object):
-    def __init__(self, transforms):
+    def __init__(self, transforms, train_dir, ann_dir):
         self.transforms = transforms
-        self.imgs = list(sorted(os.listdir("/content/images/")))
+        self.train_dir = train_dir
+        self.ann_dir = ann_dir
 
     def __getitem__(self, idx):
         file_image = 'maksssksksss'+ str(idx) + '.png'
         file_label = 'maksssksksss'+ str(idx) + '.xml'
         
-        img_path = os.path.join("/content/images/", file_image)
-        label_path = os.path.join("/content/annotations/", file_label)
+        img_path = os.path.join(self.train_dir, file_image)
+        label_path = os.path.join(self.ann_dir, file_label)
         
         img = Image.open(img_path).convert("RGB")
         target = generate_target(idx, label_path)
@@ -63,4 +64,4 @@ class CustomDataset(object):
         return img, target
 
     def __len__(self):
-        return len(self.imgs)
+        return len(list(sorted(os.listdir(self.train_dir))))
