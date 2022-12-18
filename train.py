@@ -25,6 +25,7 @@ if __name__ == '__main__':
   optimizer = torch.optim.SGD(params, lr=LEARNING_RATE, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
 
   train_loss_results = []
+  test_loss_results = []
 
   for epoch in range(NUM_EPOCHS):
     model.train() 
@@ -34,15 +35,28 @@ if __name__ == '__main__':
     for imgs, annotations in train_dataloader:
       imgs = list(img.to(device) for img in imgs)
       annotations = [{k: v.to(device) for k, v in t.items()} for t in annotations]
-      train_loss_dict = model([imgs[0]], [annotations[0]])
-      train_losses = sum(loss for loss in train_loss_dict.values())        
+      #train_loss_dict = model([imgs[0]], [annotations[0]])
+      train_loss_dict = model(imgs, annotations)
+      train_losses = sum(loss for loss in train_loss_dict.values())     
 
       optimizer.zero_grad()
       train_losses.backward()
       optimizer.step() 
       train_loss += train_losses
+    
+    for imgs, annotations in test_dataloader:
+      imgs = list(img.to(device) for img in imgs)
+      annotations = [{k: v.to(device) for k, v in t.items()} for t in annotations]
+        
+      with torch.no_grad():
+        test_loss_dict = model(imgs, annotations)
+        test_losses = sum(loss for loss in test_loss_dict.values())
+        test_loss+= test_losses
 
+    test_loss_results.append(test_loss)
     train_loss_results.append(train_loss)
+
+    print(f"Train loss: {train_loss}    Test loss: {test_loss}")
     
   save_model(model, optimizer)
   save_train_loss(train_loss_results)
