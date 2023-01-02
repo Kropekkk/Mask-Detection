@@ -7,5 +7,5 @@ LEARNING_RATE = 0.005
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.0005
 
-train_dir = "/content/images/"
-ann_dir = "/content/annotations/"
+TRAIN_DIR = "/content/images/"
+ANN_DIR  = "/content/annotations/"
