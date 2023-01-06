@@ -2,11 +2,11 @@ import torch
 from utils import collate_fn, get_train_transform, save_model, save_train_loss
 from dataset import CustomDataset
 from model import get_model_instance_segmentation
-from config import (NUM_CLASSES, NUM_EPOCHS, BATCH_SIZE, LEARNING_RATE, MOMENTUM, WEIGHT_DECAY, TRAIN_DIR, ANN_DIR, RESIZE_HEIGHT, RESIZE_WIDTH)
+from config import (NUM_CLASSES, NUM_EPOCHS, BATCH_SIZE, LEARNING_RATE, MOMENTUM, WEIGHT_DECAY, TRAIN_DIR, ANN_DIR, RESIZE)
 
 if __name__ == '__main__':
-  data_transform = get_train_transform(RESIZE_HEIGHT, RESIZE_WIDTH)
-  dataset = CustomDataset(data_transform, TRAIN_DIR, ANN_DIR, RESIZE_HEIGHT, RESIZE_WIDTH)
+  data_transform = get_train_transform(RESIZE)
+  dataset = CustomDataset(data_transform, TRAIN_DIR, ANN_DIR, RESIZE)
   train_size = int(len(dataset) * 0.8)
   test_size = len(dataset) - train_size
   train_data, test_data = torch.utils.data.random_split(dataset,[train_size,test_size])

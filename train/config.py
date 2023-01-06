@@ -5,8 +5,7 @@ LEARNING_RATE = 0.005
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.0005
 
-RESIZE_HEIGHT = 224
-RESIZE_WIDTH = 224
+RESIZE = (224, 224)
 
 TRAIN_DIR = "/content/images/"
 ANN_DIR  = "/content/annotations/"

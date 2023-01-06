@@ -4,12 +4,12 @@ import torch
 from bs4 import BeautifulSoup
 
 class CustomDataset(object):
-    def __init__(self, transforms, train_dir, ann_dir, height, width):
+    def __init__(self, transforms, train_dir, ann_dir, size):
         self.transforms = transforms
         self.train_dir = train_dir
         self.ann_dir = ann_dir
-        self.resize_height = height
-        self.resize_width = width
+        self.resize_height = size[0]
+        self.resize_width = size[1]
 
     def resize(self, xmin, ymin, xmax, ymax, height, width):
         """
