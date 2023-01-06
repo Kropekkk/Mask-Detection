@@ -5,17 +5,24 @@ import matplotlib.pyplot as plt
 def collate_fn(batch):
     return tuple(zip(*batch))
 
-def get_train_transform():
+def get_train_transform(size):
     return transforms.Compose([
-        transforms.ToTensor(), 
+        transforms.Resize(size),
+        transforms.ToTensor(),
     ])
 
 def save_model(model, optimizer):
+    """
+    Saves models
+    """
     torch.save({'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
-                }, 'outputs/last_model.pth')
+                }, 'last_model.pth')
 
 def save_train_loss(train_loss):
+    """
+    Saves train loss
+    """
     plt.figure(figsize=(16,8))
     plt.plot(train_loss, label="train_loss")
     plt.title("train loss")
