@@ -19,12 +19,13 @@ def save_model(model, optimizer):
                 'optimizer_state_dict': optimizer.state_dict(),
                 }, 'last_model.pth')
 
-def save_train_loss(train_loss):
+def save_loss(train_loss, test_loss):
     """
-    Saves train loss
+    Plots train and test loss and saves it
     """
-    plt.figure(figsize=(16,8))
-    plt.plot(train_loss, label="train_loss")
-    plt.title("train loss")
+    plt.figure(figsize=(16,25))
+    plt.plot(train_loss, label="Train loss")
+    plt.plot(test_loss, label="Test loss")
+    plt.legend()
     plt.savefig("train_loss.png")
     plt.close('all')

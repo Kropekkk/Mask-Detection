@@ -1,5 +1,5 @@
 import torch
-from utils import collate_fn, get_train_transform, save_model, save_train_loss
+from utils import collate_fn, get_train_transform, save_model, save_loss
 from dataset import CustomDataset
 from model import get_model_instance_segmentation
 from config import (NUM_CLASSES, NUM_EPOCHS, BATCH_SIZE, LEARNING_RATE, MOMENTUM, WEIGHT_DECAY, TRAIN_DIR, ANN_DIR, RESIZE)
@@ -42,20 +42,22 @@ if __name__ == '__main__':
       train_losses.backward()
       optimizer.step() 
       train_loss += train_losses
+
+    model.eval() 
     
     for imgs, annotations in test_dataloader:
       imgs = list(img.to(device) for img in imgs)
       annotations = [{k: v.to(device) for k, v in t.items()} for t in annotations]
         
-      with torch.no_grad():
+      with torch.inference_mode():
         test_loss_dict = model(imgs, annotations)
         test_losses = sum(loss for loss in test_loss_dict.values())
         test_loss+= test_losses
 
-    test_loss_results.append(test_loss)
-    train_loss_results.append(train_loss)
+    test_loss_results.append(float(test_loss)/len(test_dataloader))
+    train_loss_results.append(float(train_loss)/len(train_dataloader))
 
     print(f"Train loss: {train_loss}    Test loss: {test_loss}")
     
   save_model(model, optimizer)
-  save_train_loss(train_loss_results)
+  save_loss(train_loss_results, test_loss_results)
