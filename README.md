@@ -2,10 +2,9 @@
 
 Mask Detection app
 
-Dataset: 
+Dataset: https://www.kaggle.com/datasets/andrewmvd/face-mask-detection
 
-![Example1](https://github.com/Kropekkk/Mask-Detection/blob/main/media/example1.png)
-![Example2]https://github.com/Kropekkk/Mask-Detection/blob/main/media/example2.png)
+![Example](https://github.com/Kropekkk/Mask-Detection/blob/main/media/example2.png)
 
 ## Dependencies
 * Pytorch
@@ -13,10 +12,18 @@ Dataset:
 * Django, FastAPI (2 different branches)
 * Faster R-CNN ResNet 50
 
-## Usage
+## Setup
 
 1. Create virtual environment ```python -m venv enviro```
 2. Activate the virtual environment```.\enviro\Scripts\activate```
 3. Install dependencies ```pip install -r requirements.txt```
-4. Run manage.py using ```python manage.py runserver```
 
+## Usage
+
+1. Train the model (Remember to clone dataset and and set the parameters in config.py)
+
+```python train.py```
+
+2. Run the app (If Django)
+
+```python manage.py runserver```
