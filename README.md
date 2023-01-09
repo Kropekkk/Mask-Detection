@@ -22,8 +22,12 @@ Dataset: https://www.kaggle.com/datasets/andrewmvd/face-mask-detection
 
 1. Train the model (Remember to clone dataset and and set the parameters in config.py)
 
-```python train.py```
+```
+ python train.py
+```
 
 2. Run the app (If Django)
 
-```python manage.py runserver```
+```
+ python manage.py runserver
+```
