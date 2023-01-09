@@ -2,13 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mask Detection 
-        
-    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mask Detection</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 
 </head>
 <body>
-    
+
+<h1> Mask Detection</h1>
+<form method="post" enctype="multipart/form-data" style="margin-top: 50px; margin-bottom: 50px;">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" id="btnUpload" class="btn btn-primary">Upload</button>
+</form>
+
+{% if image_uri is not None %}
+    <img src="{{ image_uri }}" class="img-fluid" alt="Uploaded image" style="max-width: min(1000px, 100%); height: auto; margin-top: 50px;">
+{% endif %}
+
 </body>
 </html>
