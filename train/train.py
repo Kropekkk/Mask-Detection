@@ -42,8 +42,6 @@ if __name__ == '__main__':
       train_losses.backward()
       optimizer.step() 
       train_loss += train_losses
-
-    model.eval() 
     
     for imgs, annotations in test_dataloader:
       imgs = list(img.to(device) for img in imgs)
@@ -59,5 +57,5 @@ if __name__ == '__main__':
 
     print(f"Train loss: {train_loss}    Test loss: {test_loss}")
     
-  save_model(model, optimizer)
+  save_model(model)
   save_loss(train_loss_results, test_loss_results)

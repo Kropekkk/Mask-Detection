@@ -13,13 +13,13 @@ def get_train_transform(size):
         transforms.ToTensor(),
     ])
 
-def save_model(model, optimizer):
+def save_model(model):
     """
     Saves models
     """
-    torch.save({'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                }, 'last_model.pth')
+
+    torch.save(obj=model.state_dict(),
+             f='last_model.pth')
 
 def save_loss(train_loss, test_loss):
     """
@@ -32,19 +32,23 @@ def save_loss(train_loss, test_loss):
     plt.savefig("train_loss.png")
     plt.close('all')
 
-def plot_image(img, annotation, scale_h, scale_w, save = False):
+def plot_image(img, annotation, scale_h, scale_w, save = False, confidence = 0.5):
     """
     Draw rectangles on original image
     """
-    img_np = np.asarray(img)
 
+    img_np = np.asarray(img)
     img_rgb = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
 
-    for box in annotation['boxes']:
+    for i, box in enumerate(annotation['boxes']):
         xmin, ymin, xmax, ymax = box
-        
-        cv2.rectangle(img_rgb, (int(xmin*scale_w), int(ymin*scale_h)), (int(xmax*scale_w), int(ymax*scale_h)), (0,255,0), 2)
-    
+
+        if annotation['scores'][i] > confidence:
+            if annotation['labels'][i] == 1:
+                cv2.rectangle(img_rgb, (int(xmin*scale_w), int(ymin*scale_h)), (int(xmax*scale_w), int(ymax*scale_h)), (0, 255, 0), 2)
+            elif annotation['labels'][i] == 2:
+                cv2.rectangle(img_rgb, (int(xmin*scale_w), int(ymin*scale_h)), (int(xmax*scale_w), int(ymax*scale_h)), (0, 0 ,255), 2)
+   
     if save:
         cv2.imwrite('prediction.png', img_rgb)
 
