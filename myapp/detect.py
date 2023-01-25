@@ -11,7 +11,7 @@ convert_tensor = get_train_transform(RESIZE)
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 model = get_model_instance_segmentation(NUM_CLASSES)
 checkpoint = torch.load('train/last_model.pth', map_location=device)
-model.load_state_dict(checkpoint['model_state_dict'])
+model.load_state_dict(checkpoint)
 model.to(device).eval()
 
 
